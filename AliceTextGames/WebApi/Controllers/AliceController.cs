@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AliceApi;
+using AliceApi.Modules;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -49,11 +50,15 @@ namespace WebApi.Controllers
             {
                 aliceResponse.response.text = "Вот тебе справка";
             }
+            else if (EntitiesConvert.TryParseInt(aliceRequest.request.nlu.entities, out int value))
+            {
+                aliceResponse.response.text = $"Текст содержит число {value}";
+            }
             else
             {
                 aliceResponse.response.text = $"Все говорят {text}, а ты купи слона";
             }
-            
+
             aliceResponse.response.tts = aliceResponse.response.text;
             aliceResponse.response.end_session = false;
 

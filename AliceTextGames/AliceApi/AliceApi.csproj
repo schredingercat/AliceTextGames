@@ -43,7 +43,10 @@
   <ItemGroup>
     <Compile Include="AliceRequest.cs" />
     <Compile Include="AliceResponse.cs" />
+    <Compile Include="Modules\EntitiesConvert.cs" />
     <Compile Include="Modules\Meta.cs" />
+    <Compile Include="Modules\Nlu.cs" />
+    <Compile Include="Modules\TokensRange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modules\Request.cs" />
     <Compile Include="Modules\Response.cs" />
