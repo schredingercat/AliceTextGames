@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,7 +39,21 @@ namespace WebApi.Controllers
             };
             var aliceResponse = new AliceResponse { session = session };
 
-            aliceResponse.response.text = "Ответ на запрос";
+            var text = aliceRequest.request.original_utterance.ToLower();
+
+            if (aliceRequest.session.New)
+            {
+                aliceResponse.response.text = "Привет!";
+            }
+            else if (text == "справка" || text == "помощь")
+            {
+                aliceResponse.response.text = "Вот тебе справка";
+            }
+            else
+            {
+                aliceResponse.response.text = $"Все говорят {text}, а ты купи слона";
+            }
+            
             aliceResponse.response.tts = aliceResponse.response.text;
             aliceResponse.response.end_session = false;
 

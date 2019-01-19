@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <StartupObject>WebApi.Program</StartupObject>
+    <UserSecretsId>b2135e2c-e0b1-4d94-b0d3-2067db2fb993</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
