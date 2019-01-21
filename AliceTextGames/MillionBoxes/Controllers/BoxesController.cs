@@ -26,7 +26,7 @@ namespace MillionBoxes.Controllers
         public IEnumerable<string> Get()
         {
             //SaveToBox(new Random().Next(999999), "test");
-            dataBase.SaveToBox(27, "New Record");
+            dataBase.SaveToBox(25, "Its Work!");
             
             var boxes = new List<string>();
             foreach (var box in dataBase.Boxes)
