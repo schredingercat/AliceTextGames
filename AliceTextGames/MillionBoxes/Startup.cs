@@ -27,7 +27,9 @@ namespace MillionBoxes
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = Configuration.GetConnectionString("DefaultConnection");
+            //TODO Перенести строку подключения в файл конфигурации
+            string connection = @"Server=.\SQLEXPRESS;Database=boxesdb;Trusted_Connection=True;";
+            //string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<BoxesContext>(options => options.UseSqlServer(connection));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

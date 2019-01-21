@@ -13,10 +13,11 @@ namespace MillionBoxes.Models
 
         public BoxesContext(DbContextOptions<BoxesContext> options) : base(options)
         {
-            if (Database.EnsureCreated())
-            {
-                Database.Migrate();
-            }
+            Database.EnsureCreated();
+            //if (Database.EnsureCreated())
+            //{
+            //    Database.Migrate();
+            //}
         }
 
         public void SaveToBox(int number, string message)
