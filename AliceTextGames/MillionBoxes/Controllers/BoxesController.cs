@@ -29,7 +29,6 @@ namespace MillionBoxes.Controllers
         {
             //dataBase.SaveToBox(25, "It Works!");
             dataBase.SaveToBox(new Random().Next(99), "It Works!");
-
             var boxes = new List<string>();
             foreach (var box in dataBase.Boxes)
             {
@@ -50,48 +49,7 @@ namespace MillionBoxes.Controllers
         [HttpPost]
         public AliceResponse Post([FromBody]AliceRequest aliceRequest)
         {
-            var session = new SessionResponse()
-            {
-                session_id = aliceRequest.session.session_id,
-                message_id = aliceRequest.session.message_id,
-                user_id = aliceRequest.session.user_id
-            };
-            var aliceResponse = new AliceResponse { session = session };
-
-            var text = aliceRequest.request.original_utterance.ToLower();
-
-            if (aliceRequest.session.New)
-            {
-                aliceResponse.response.text = "Привет!";
-            }
-            else if (text == "справка" || text == "помощь")
-            {
-                aliceResponse.response.text = "Вот тебе справка";
-            }
-            else if (EntitiesConvert.TryParseInt(aliceRequest.request.nlu.entities, out int value) && text.Contains("открой"))
-            {
-                aliceResponse.response.text = $"В коробке номер {value} лежит сообщение: {dataBase.ReadFromBox(value)}";
-                dataBase.SaveOpenedBoxNumber(aliceRequest.session.user_id, value);
-            }
-            else if (text.Contains("сохрани") && dataBase.Users.Any(n => n.UserId == aliceRequest.session.user_id) && dataBase.Users.FirstOrDefault(n=> n.UserId == aliceRequest.session.user_id)?.OpenedBox !=0)
-            {
-                aliceResponse.response.text = $"Сохраняю сообщение в коробку номер { dataBase.Users.FirstOrDefault(n => n.UserId == aliceRequest.session.user_id)?.OpenedBox}. Что написать?";
-                dataBase.Users.FirstOrDefault(n => n.UserId == aliceRequest.session.user_id).IsSaving = true;
-
-            }
-            else if (dataBase.Users.FirstOrDefault(n => n.UserId == aliceRequest.session.user_id).IsSaving)
-            {
-
-            }
-            else
-            {
-                aliceResponse.response.text = $"Все говорят {text}, а ты купи слона";
-            }
-
-            aliceResponse.response.tts = aliceResponse.response.text;
-            aliceResponse.response.end_session = false;
-
-            return aliceResponse;
+            return RequestToResponse.MakeResponse(aliceRequest, dataBase);
         }
 
         // PUT api/<controller>/5

@@ -28,8 +28,8 @@ namespace MillionBoxes
         public void ConfigureServices(IServiceCollection services)
         {
             //TODO Перенести строку подключения в файл конфигурации
-            string connection = @"Data Source=tcp:millionboxes20190123043113dbserver.database.windows.net,1433;Initial Catalog=MillionBoxes20190123043113_db;User Id=dbuser@millionboxes20190123043113dbserver;Password=DataBasePass123";
-            //string connection = @"Server=.\SQLEXPRESS;Database=boxesdb;Trusted_Connection=True;";
+            //string connection = @"Data Source=tcp:millionboxes20190123043113dbserver.database.windows.net,1433;Initial Catalog=MillionBoxes20190123043113_db;User Id=dbuser@millionboxes20190123043113dbserver;Password=DataBasePass123";
+            string connection = @"Server=.\SQLEXPRESS;Database=boxesdb;Trusted_Connection=True;";
             //string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<BoxesContext>(options => options.UseSqlServer(connection));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

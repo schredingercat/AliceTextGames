@@ -20,20 +20,24 @@ namespace MillionBoxes.Models
             //}
         }
 
-        public void SaveToBox(int number, string message)
+        public Box GetBox(int number)
         {
-            var box = new Box { Number = number, Message = message };
             var targetBox = Boxes.FirstOrDefault(n => n.Number == number);
 
             if (targetBox != null)
             {
-                targetBox.Message = message;
-            }
-            else
-            {
-                Boxes.Add(box);
+                return targetBox;
             }
 
+            Boxes.Add(new Box { Number = number });
+            SaveChanges();
+            return Boxes.FirstOrDefault(n => n.Number == number);
+        }
+
+        public void SaveToBox(int number, string message)
+        {
+            var box = GetBox(number);
+            box.Message = message;
             SaveChanges();
         }
 
@@ -49,20 +53,31 @@ namespace MillionBoxes.Models
             return box.Message;
         }
 
-        public void SaveOpenedBoxNumber(string userId, int number)
+        public User GetUserById(string userId)
         {
-            var user = new User { UserId = userId, OpenedBox = number};
             var targetUser = Users.FirstOrDefault(n => n.UserId == userId);
 
             if (targetUser != null)
             {
-                targetUser.OpenedBox = number;
-            }
-            else
-            {
-                Users.Add(user);
+                return targetUser;
             }
 
+            Users.Add(new User { UserId = userId });
+            SaveChanges();
+            return Users.FirstOrDefault(n => n.UserId == userId);
+        }
+
+        public void SetOpenedBoxNumber(string userId, int number)
+        {
+            var user = GetUserById(userId);
+            user.OpenedBox = number;
+            SaveChanges();
+        }
+
+        public void SetUserSaveMode(string userId, bool isSaving)
+        {
+            var user = GetUserById(userId);
+            user.IsSaving = isSaving;
             SaveChanges();
         }
 
