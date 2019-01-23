@@ -49,5 +49,22 @@ namespace MillionBoxes.Models
             return box.Message;
         }
 
+        public void SaveOpenedBoxNumber(string userId, int number)
+        {
+            var user = new User { UserId = userId, OpenedBox = number};
+            var targetUser = Users.FirstOrDefault(n => n.UserId == userId);
+
+            if (targetUser != null)
+            {
+                targetUser.OpenedBox = number;
+            }
+            else
+            {
+                Users.Add(user);
+            }
+
+            SaveChanges();
+        }
+
     }
 }

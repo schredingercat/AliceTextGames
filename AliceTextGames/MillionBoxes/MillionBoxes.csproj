@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <StartupObject>MillionBoxes.Program</StartupObject>
+    <UserSecretsId>fc7d6f84-99da-4841-a67b-e38f061d9882</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +15,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AliceApi\AliceApi.csproj" />
   </ItemGroup>
 
 </Project>

@@ -15,5 +15,12 @@ namespace MillionBoxes.Models
 
         public string UserId { get; set; }
         public int OpenedBox { get; set; }
+        public bool IsSaving { get; set; }
+
+        public User()
+        {
+            UserId = string.Empty;
+            IsSaving = false;
+        }
     }
 }
