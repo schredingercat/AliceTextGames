@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace MillionBoxes.Models
 {
-    public class BoxesContext : DbContext
+    public sealed class BoxesContext : DbContext
     {
         public DbSet<Box> Boxes { get; set; }
         public DbSet<User> Users { get; set; }
