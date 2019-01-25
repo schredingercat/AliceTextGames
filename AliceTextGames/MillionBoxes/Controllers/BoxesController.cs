@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AliceApi;
-using AliceApi.Modules;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using MillionBoxes.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -22,18 +17,13 @@ namespace MillionBoxes.Controllers
         {
             dataBase = context;
         }
-        
+
         // GET: api/<controller>
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            //dataBase.SaveToBox(25, "It Works!");
-            dataBase.SaveToBox(new Random().Next(99), "It Works!");
-            var boxes = new List<string>();
-            foreach (var box in dataBase.Boxes)
-            {
-                boxes.Add($"{box.Number}. {box.Message} - {DateTime.Now}");
-            }
+            var boxes = new List<string> { $"Количество записей - {dataBase.Boxes.Count()}" };
+            boxes.AddRange(dataBase.Boxes.OrderBy(n => n.Number).Select(n => $"{n.Number} - {n.Message}"));
 
             return boxes;
         }
@@ -42,7 +32,7 @@ namespace MillionBoxes.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return $"id: {id} {dataBase.ReadFromBox(id)}" ;
+            return $"ID: \"{id}\" - MESSAGE: \"{dataBase.ReadFromBox(id)}\"";
         }
 
         // POST api/<controller>
