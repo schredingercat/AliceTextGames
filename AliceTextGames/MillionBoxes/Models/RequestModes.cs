@@ -9,8 +9,9 @@
         Dictate = 4,
         DeleteMessage = 5,
         Repeat = 6,
-        BoxIsNotOpen = 7,
-        InvalidBoxNumber = 8,
-        SomethingWrong = 9
+        Read = 7,
+        BoxIsNotOpen = 8,
+        InvalidBoxNumber = 9,
+        SomethingWrong = 10
     }
 }

@@ -37,7 +37,7 @@ namespace MillionBoxes.Models
                     return TextResources.Help;
 
                 case RequestModes.OpenBox:
-                    EntitiesConvertExtension.TryParseInt(aliceRequest.request.nlu.entities, out var number);
+                    EntitiesConvertExtension.TryParseInt(aliceRequest.request, out var number);
                     dataBase.SetOpenedBoxNumber(user.UserId, number);
                     var message = dataBase.ReadFromBox(number);
                     return message.Length == 0 ? GetRandomString(TextResources.BoxIsEmpty)
@@ -56,6 +56,11 @@ namespace MillionBoxes.Models
                     dataBase.SaveToBox(user.OpenedBox, aliceRequest.request.original_utterance);
                     dataBase.SetUserSaveMode(user.UserId, false);
                     return $"{GetRandomString(TextResources.MessageSaved)} {user.OpenedBox}";
+
+                case RequestModes.Read:
+                    message = dataBase.ReadFromBox(user.OpenedBox);
+                    return message.Length == 0 ? GetRandomString(TextResources.BoxIsEmpty)
+                                               : $"{GetRandomString(TextResources.MessageInTheBox)}. {message}";
 
                 case RequestModes.DeleteMessage:
                     dataBase.SaveToBox(user.OpenedBox, string.Empty);
@@ -97,7 +102,7 @@ namespace MillionBoxes.Models
             }
 
             if ((command.Contains("откр") || command.Contains("заглян") || command.Contains("посмотр"))
-               && EntitiesConvertExtension.TryParseInt(aliceRequest.request.nlu.entities, out var number))
+               && EntitiesConvertExtension.TryParseInt(aliceRequest.request, out var number))
             {
                 return number > 0 && number <= 1000000 ? RequestModes.OpenBox : RequestModes.InvalidBoxNumber;
             }
@@ -111,6 +116,11 @@ namespace MillionBoxes.Models
                 command.Contains("снова"))
             {
                 return user.OpenedBox != 0 ? RequestModes.Repeat : RequestModes.BoxIsNotOpen;
+            }
+
+            if (command.Contains("читай") || command.Contains("читать") || command.Contains("прочти"))
+            {
+                return user.OpenedBox != 0 ? RequestModes.Read : RequestModes.BoxIsNotOpen;
             }
 
             if (command.Contains("удали") || command.Contains("сотри") || command.Contains("стереть") ||
