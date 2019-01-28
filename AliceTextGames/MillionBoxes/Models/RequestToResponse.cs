@@ -124,7 +124,7 @@ namespace MillionBoxes.Models
             }
 
             if (command.Contains("удали") || command.Contains("сотри") || command.Contains("стереть") ||
-                command.Contains("отчисти") || command.Contains("очисти"))
+                command.Contains("отчист") || command.Contains("очист"))
             {
                 return user.OpenedBox != 0 ? RequestModes.DeleteMessage : RequestModes.BoxIsNotOpen;
             }
